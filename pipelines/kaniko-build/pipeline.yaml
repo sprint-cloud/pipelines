@@ -2,7 +2,6 @@ apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
   name: kaniko-build
-  namespace: pipelines
 spec:
   description: | 
     This pipeline builds an image using kaniko
