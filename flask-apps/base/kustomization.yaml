@@ -1,7 +1,7 @@
 namespace: sprint-pipelines
 
 resources:
-  - "ci-pipeline.yaml"
+  - "flask-ci-pipeline.yaml"
   - "tasks/git-clone.yaml"
   - "tasks/kaniko.yaml"
   - "tasks/pylint.yaml"
