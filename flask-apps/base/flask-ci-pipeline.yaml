@@ -13,6 +13,7 @@ spec:
   workspaces:
     - name: source
     - name: basic-auth
+    - name: dockerconfig
   tasks:
     - name: fetch-repository
       taskRef:
