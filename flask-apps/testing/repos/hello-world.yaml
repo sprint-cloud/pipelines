@@ -1,0 +1,6 @@
+apiVersion: "pipelinesascode.tekton.dev/v1alpha1"
+kind: Repository
+metadata:
+  name: hello-sprint
+spec:
+  url: "https://github.com/sprint-cloud/hello-sprint-app"

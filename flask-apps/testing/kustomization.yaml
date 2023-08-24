@@ -1,0 +1,5 @@
+bases:
+  - "../base"
+
+resources:
+  - "repos/hello-world.yaml"
