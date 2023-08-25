@@ -1,0 +1,30 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: init-venv
+  labels:
+    app.kubernetes.io/version: "0.1"
+spec:
+  desciption: >-
+    This task will create a Python virtual env using a requirements.txt file
+  
+  workspaces:
+    - name: venv
+    - name: source
+  params:
+    - name: requirements_file
+      description: Name of the requirements file
+      default: "requirements.txt"
+    - name: path
+      description: Path of the Virtual environment
+      default: ".venv"
+    - name: image
+      default: "python:alpine"
+  steps:
+    - name: venv
+      image: $(params.image)
+      workingDir: $(workspaces.source.path)
+      script: |
+        python3 -m venv $(workspaces.venv.path)
+        source $(workspaces.venv.path)/bin/activate
+        pip install -f $(workspaces.source.path)/$(params.requirements_file)

@@ -12,6 +12,7 @@ spec:
       type: string
   workspaces:
     - name: source
+    - name: venv
     - name: basic-auth
     - name: dockerconfig
   tasks:
@@ -28,6 +29,16 @@ spec:
           value: $(params.repo_url)
         - name: revision
           value: $(params.revision)
+    - name: create-venv
+      taskRef: 
+        name: init-venv
+      runAfter:
+        - fetch-repository
+      workspace:
+        - name: source
+          workspace: source
+        - name: venv
+          workspace: venv
     - name: linting
       taskRef: 
         name: pylint
