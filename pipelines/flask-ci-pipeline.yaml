@@ -12,7 +12,6 @@ spec:
       type: string
   workspaces:
     - name: source
-    - name: venv
     - name: basic-auth
     - name: dockerconfig
   tasks:
