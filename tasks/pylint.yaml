@@ -17,9 +17,6 @@ spec:
 
   workspaces:
     - name: source
-    - description: The workspace consisting of the custom pip settings.
-      name: pip-conf
-      optional: true
   params:
     - name: image
       description: The container image with pylint
@@ -39,15 +36,6 @@ spec:
     - name: pylint
       image: $(params.image)
       workingDir: $(workspaces.source.path)
-      env:
-        - name: HOME
-          value: /tmp/python
-        - name: PARAM_PIP_CONF_FILE
-          value: $(params.pip_conf_file)
-        - name: WORKSPACE_PIP_CONF_BOUND
-          value: $(workspaces.pip-conf.bound)
-        - name: WORKSPACE_PIP_CONF_PATH
-          value: $(workspaces.pip-conf.path)
       script: |
         export PATH=$PATH:$HOME/.local/bin
         source $(workspaces.source.path)/$(params.venv_dir)/bin/activate
