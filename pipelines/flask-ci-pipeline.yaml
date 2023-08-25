@@ -43,7 +43,7 @@ spec:
       taskRef: 
         name: pylint
       runAfter:
-        - fetch-repository
+        - create-venv
       workspaces:
         - name: source
           workspace: source
