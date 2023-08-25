@@ -37,8 +37,6 @@ spec:
       workspaces:
         - name: source
           workspace: source
-        - name: venv
-          workspace: venv
     - name: linting
       taskRef: 
         name: pylint
