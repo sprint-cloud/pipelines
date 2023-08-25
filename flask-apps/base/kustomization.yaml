@@ -1,7 +1,0 @@
-resources:
-  - "namespace.yaml"
-  - "flask-ci-pipeline.yaml"
-  - "tasks/git-clone.yaml"
-  - "tasks/kaniko.yaml"
-  - "tasks/pylint.yaml"
-  - "tasks/pytest.yaml"

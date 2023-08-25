@@ -1,7 +1,0 @@
-namespace: sprint-pipelines
-
-bases:
-  - "../base"
-
-resources:
-  - "repos/hello-world.yaml"
