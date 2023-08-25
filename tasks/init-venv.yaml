@@ -26,4 +26,4 @@ spec:
       script: |
         python3 -m venv $(workspaces.source.path)/$(params.venv_dir)
         source $(workspaces.source.path)/$(params.venv_dir)/bin/activate
-        pip install -f $(workspaces.source.path)/$(params.requirements_file)
+        pip install -r $(workspaces.source.path)/$(params.requirements_file)
