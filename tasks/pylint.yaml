@@ -4,7 +4,7 @@ kind: Task
 metadata:
   name: pylint
   labels:
-    app.kubernetes.io/version: "0.3"
+    app.kubernetes.io/version: "0.1"
   annotations:
     tekton.dev/categories: Code Quality
     tekton.dev/pipelines.minVersion: "0.17.0"
@@ -24,20 +24,17 @@ spec:
     - name: image
       description: The container image with pylint
       default: python:alpine
+    - name: venv_dir
+      description: Dir used for creating the Virtual environment
+      default: ".venv"
     - name: path
       description: The path to the module which should be analysed by pylint
       default: "."
       type: string
-    - name: requirements_file
-      description: The name of the requirements file inside the source location
-      default: "requirements.txt"
     - name: args
       description: The arguments to pass to the pylint CLI.
       type: array
       default: []
-    - name: pip_conf_file
-      description: The name of the custom pip config file.
-      default: "pip.conf"
   steps:
     - name: pylint
       image: $(params.image)
@@ -53,14 +50,8 @@ spec:
           value: $(workspaces.pip-conf.path)
       script: |
         export PATH=$PATH:$HOME/.local/bin
-
-        if [ "${WORKSPACE_PIP_CONF_BOUND}" = "true" ] ; then
-          export PIP_CONFIG_FILE="${WORKSPACE_PIP_CONF_PATH}/${PARAM_PIP_CONF_FILE}"
-        fi
-
-        if [ -n "$(params.requirements_file)" ] && [ -e "$(params.requirements_file)" ];then
-          python -mpip install --user -r "$(params.requirements_file)"
-        fi
+        source $(workspaces.source.path)/$(params.venv_dir)/bin/activate
+        pip install pylint
         pylint $@ "$(params.path)"
       args:
         - "$(params.args)"
