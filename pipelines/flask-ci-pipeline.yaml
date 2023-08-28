@@ -75,7 +75,7 @@ spec:
           workspace: dockerconfig
       params:
         - name: IMAGE
-          value: $(params.app-image)
+          value: $(params.app-image):$(params.app-image-tag)
     - name: release-app-to-staging
       taskRef:
         name: git-cli
