@@ -38,7 +38,7 @@ spec:
       workingDir: $(workspaces.source.path)
       script: |
         export PATH=$PATH:$HOME/.local/bin
-        source $(params.VENV_PATH)/.venv/bin/activate
+        source $(params.VENV_PATH)/bin/activate
 
         if [ -z "$(params.ARGS)" ]; then
           python3 -m pytest "$(params.SOURCE_PATH)"
