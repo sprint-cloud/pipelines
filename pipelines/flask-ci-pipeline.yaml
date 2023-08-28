@@ -5,29 +5,16 @@ metadata:
 spec:
   params:
     - name: repo_url
-      type: string
     - name: revision
-      type: string
     - name: app-image
-      type: string
     - name: app-image-tag
-      type: string
     - name: app-name
-      type: string
-    - name: env
-      type: string
-    - name: stages
-      type: object
-      properties:
-        testing:
-          type: string
-          default: "true"
-        build:
-          type: string
-          default: "true"
-        release:
-          type: string
-          default: "true"
+    - name: testing     
+      default: true
+    - name: build
+      default: true
+    - name: release-env
+      default: none
   workspaces:
     - name: source
     - name: basic-auth
@@ -57,7 +44,7 @@ spec:
         - name: source
           workspace: source
       when:
-        - input: $(params.stages.testing)
+        - input: $(params.testing)
           operator: in
           values: ["true"]
 
@@ -73,7 +60,7 @@ spec:
         - name: path
           value: $(params.app-name)
       when:
-        - input: $(params.stages.testing)
+        - input: $(params.testing)
           operator: in
           values: ["true"]
     - name: unit-testing
@@ -85,7 +72,7 @@ spec:
         - name: source
           workspace: source
       when:
-        - input: $(params.stages.testing)
+        - input: $(params.testing)
           operator: in
           values: ["true"]
 
@@ -103,7 +90,7 @@ spec:
         - name: IMAGE
           value: $(params.app-image):$(params.app-image-tag)
       when:
-        - input: $(params.stages.build)
+        - input: $(params.build)
           operator: in
           values: ["true"]
     - name: release-app-to-staging
@@ -117,9 +104,9 @@ spec:
         - name: ssh-directory
           workspace: ssh-creds
       when:
-        - input: $(params.stages.release)
-          operator: in
-          values: ["true"]
+        - input: $(params.release-env)
+          operator: notin
+          values: ["none"]
       params:
         - name: GIT_USER_NAME
           value: Sprint-Pipeline
