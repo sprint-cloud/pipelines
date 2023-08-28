@@ -17,9 +17,6 @@ spec:
 
   workspaces:
     - name: source
-    - description: The workspace consisting of the custom pip settings.
-      name: pip-conf
-      optional: true
   params:
     - name: PYTHON_IMAGE
       description: The used Python image
