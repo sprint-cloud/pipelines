@@ -112,8 +112,6 @@ spec:
           value: Sprint-Pipeline
         - name: GIT_USER_EMAIL
           value: noreply@example.com
-        - name: WORKSPACE_BASIC_AUTH_DIRECTORY_BOUND
-          value: false
         - name: GIT_SCRIPT
           value: |
             git pull git@github.com:sprint-cloud/sprint-apps.git .
