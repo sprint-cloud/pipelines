@@ -109,7 +109,7 @@ spec:
       - name: WORKSPACE_SSH_DIRECTORY_PATH
         value: $(workspaces.ssh-directory.path)
       - name: WORKSPACE_BASIC_AUTH_DIRECTORY_BOUND
-        value: false
+        value: "false"
       - name: WORKSPACE_BASIC_AUTH_DIRECTORY_PATH
         value: $(workspaces.basic-auth.path)
       script: |
