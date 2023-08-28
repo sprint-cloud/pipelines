@@ -134,7 +134,7 @@ spec:
               source:
                 chart: sprint-flask-app
                 repoURL: https://sprint-cloud.github.io/helm-charts
-                targetRevision: 0.1
+                targetRevision: "0.1"
                 helm:
                   values: |-
                       image: 
