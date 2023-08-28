@@ -17,11 +17,17 @@ spec:
     - name: env
       type: string
     - name: stages
-      type: array
-      default:
-        - testing
-        - build
-        - release
+      type: object
+      properties:
+        testing:
+          type: string
+          default: "true"
+        build:
+          type: string
+          default: "true"
+        release:
+          type: string
+          default: "true"
   workspaces:
     - name: source
     - name: basic-auth
@@ -51,9 +57,9 @@ spec:
         - name: source
           workspace: source
       when:
-        - input: $(params.stages)
+        - input: $(params.stages.testing)
           operator: in
-          values: ["testing"]
+          values: ["true"]
 
     - name: linting
       taskRef: 
@@ -67,9 +73,9 @@ spec:
         - name: path
           value: $(params.app-name)
       when:
-        - input: $(params.stages)
+        - input: $(params.stages.testing)
           operator: in
-          values: ["testing"]
+          values: ["true"]
     - name: unit-testing
       taskRef: 
         name: pytest
@@ -79,9 +85,9 @@ spec:
         - name: source
           workspace: source
       when:
-        - input: $(params.stages)
+        - input: $(params.stages.testing)
           operator: in
-          values: ["testing"]
+          values: ["true"]
 
     - name: build-image
       taskRef:
@@ -97,9 +103,9 @@ spec:
         - name: IMAGE
           value: $(params.app-image):$(params.app-image-tag)
       when:
-        - input: $(params.stages)
+        - input: $(params.stages.build)
           operator: in
-          values: ["build"]
+          values: ["true"]
     - name: release-app-to-staging
       taskRef:
         name: git-cli
@@ -111,9 +117,9 @@ spec:
         - name: ssh-directory
           workspace: ssh-creds
       when:
-        - input: $(params.stages)
+        - input: $(params.stages.release)
           operator: in
-          values: ["release"]
+          values: ["true"]
       params:
         - name: GIT_USER_NAME
           value: Sprint-Pipeline
