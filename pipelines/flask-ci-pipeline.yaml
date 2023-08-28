@@ -16,6 +16,12 @@ spec:
       type: string
     - name: env
       type: string
+    - name: stages
+      type: array
+      default:
+        - testing
+        - build
+        - release
   workspaces:
     - name: source
     - name: basic-auth
@@ -44,6 +50,11 @@ spec:
       workspaces:
         - name: source
           workspace: source
+      when:
+        - input: $(params.stages[*])
+          operator: in
+          values: ["testing"]
+
     - name: linting
       taskRef: 
         name: pylint
@@ -55,6 +66,10 @@ spec:
       params:
         - name: path
           value: $(params.app-name)
+      when:
+        - input: $(params.stages[*])
+          operator: in
+          values: ["testing"]
     - name: unit-testing
       taskRef: 
         name: pytest
@@ -63,6 +78,11 @@ spec:
       workspaces:
         - name: source
           workspace: source
+      when:
+        - input: $(params.stages[*])
+          operator: in
+          values: ["testing"]
+
     - name: build-image
       taskRef:
         name: kaniko
@@ -76,6 +96,10 @@ spec:
       params:
         - name: IMAGE
           value: $(params.app-image):$(params.app-image-tag)
+      when:
+        - input: $(params.stages[*])
+          operator: in
+          values: ["build"]
     - name: release-app-to-staging
       taskRef:
         name: git-cli
@@ -86,6 +110,10 @@ spec:
           workspace: app-manifests
         - name: ssh-directory
           workspace: ssh-creds
+      when:
+        - input: $(params.stages[*])
+          operator: in
+          values: ["release"]
       params:
         - name: GIT_USER_NAME
           value: Sprint-Pipeline
