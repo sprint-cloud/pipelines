@@ -147,5 +147,5 @@ spec:
             EOL
             
             git add $(params.release-env)/$(params.app-name).yaml
-            git commit -m "CI/CD pipeline: update to image $(params.app-image)"
+            git commit -m "CI/CD pipeline: update to image $(params.app-image):$(params.app-image-tag)"
             git push
