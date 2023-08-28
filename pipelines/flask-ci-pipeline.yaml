@@ -51,7 +51,7 @@ spec:
         - name: source
           workspace: source
       when:
-        - input: $(params.stages[*])
+        - input: $(params.stages)
           operator: in
           values: ["testing"]
 
@@ -67,7 +67,7 @@ spec:
         - name: path
           value: $(params.app-name)
       when:
-        - input: $(params.stages[*])
+        - input: $(params.stages)
           operator: in
           values: ["testing"]
     - name: unit-testing
@@ -79,7 +79,7 @@ spec:
         - name: source
           workspace: source
       when:
-        - input: $(params.stages[*])
+        - input: $(params.stages)
           operator: in
           values: ["testing"]
 
@@ -97,7 +97,7 @@ spec:
         - name: IMAGE
           value: $(params.app-image):$(params.app-image-tag)
       when:
-        - input: $(params.stages[*])
+        - input: $(params.stages)
           operator: in
           values: ["build"]
     - name: release-app-to-staging
@@ -111,7 +111,7 @@ spec:
         - name: ssh-directory
           workspace: ssh-creds
       when:
-        - input: $(params.stages[*])
+        - input: $(params.stages)
           operator: in
           values: ["release"]
       params:
