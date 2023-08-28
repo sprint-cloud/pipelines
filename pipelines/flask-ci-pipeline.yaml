@@ -119,19 +119,19 @@ spec:
             git pull git@github.com:sprint-cloud/sprint-apps.git .
 
             # Create template
-            cat > $(params.env)/$(params.app-name).yaml << EOL
+            cat > $(params.release-env)/$(params.app-name).yaml << EOL
             apiVersion: argoproj.io/v1alpha1
             kind: Application
             metadata:
-              name: $(params.app-name)-$(params.env)
+              name: $(params.app-name)-$(params.release-env)
               namespace: argocd
               annotations:
                 notifications.argoproj.io/subscribe.on-deployed.slack: deployment
             spec:
               destination:
-                namespace: sprint-$(params.env)
+                namespace: sprint-$(params.release-env)
                 server: https://kubernetes.default.svc
-              project: sprint-$(params.env)
+              project: sprint-$(params.release-env)
               source:
                 chart: sprint-flask-app
                 repoURL: https://sprint-cloud.github.io/helm-charts
@@ -147,6 +147,6 @@ spec:
                   prune: true
             EOL
             
-            git add $(params.env)/$(params.app-name).yaml
+            git add $(params.release-env)/$(params.app-name).yaml
             git commit -m "CI/CD pipeline: update to image $(params.app-image)"
             git push
