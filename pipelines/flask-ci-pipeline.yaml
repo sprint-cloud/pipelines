@@ -114,9 +114,10 @@ spec:
           value: noreply@example.com
         - name: GIT_SCRIPT
           value: |
-            git clone git@github.com:sprint-cloud/sprint-apps.git .
+            git clone git@github.com:sprint-cloud/sprint-apps.git
 
             # Create template
+            cd sprint-apps
             cat > $(params.release-env)/$(params.app-name).yaml << EOL
             apiVersion: argoproj.io/v1alpha1
             kind: Application
