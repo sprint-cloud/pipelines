@@ -10,6 +10,8 @@ spec:
       type: string
     - name: app-image
       type: string
+    - name: app-name
+      type: string
   workspaces:
     - name: source
     - name: basic-auth
@@ -44,6 +46,9 @@ spec:
       workspaces:
         - name: source
           workspace: source
+      params:
+        - name: path
+          value: $(params.app-name)
     - name: unit-testing
       taskRef: 
         name: pytest
