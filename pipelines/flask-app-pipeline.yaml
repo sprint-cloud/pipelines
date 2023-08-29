@@ -89,6 +89,8 @@ spec:
       params:
         - name: IMAGE
           value: $(params.app-image):$(params.app-image-tag)
+        - name: BUILDER_IMAGE
+          value: gcr.io/kaniko-project/executor:v1.14.0
       when:
         - input: $(params.build)
           operator: in
